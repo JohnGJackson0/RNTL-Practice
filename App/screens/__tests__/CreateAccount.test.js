@@ -38,3 +38,32 @@ test("displays error message if all fields are not completed", () => {
     getByTestId("CreateAccount.errorMessage").props.children
   ).not.toBeNull();
 });
+
+test("doesn't display an error message if all fields are complete", () => {
+  const { getByTestId, getByText } = render(<CreateAccount />);
+
+  expect(getByTestId("CreateAccount.errorMessage").props.children).toBeNull();
+
+  fireEvent.press(getByText("Submit"));
+  expect(
+    getByTestId("CreateAccount.errorMessage").props.children
+  ).not.toBeNull();
+
+  fireEvent(
+    getByTestId("CreateAccount.email"),
+    "onChangeText",
+    "test@example.com"
+  );
+  fireEvent(getByTestId("CreateAccount.fName"), "onChangeText", "spencer");
+  fireEvent(getByTestId("CreateAccount.lName"), "onChangeText", "carli");
+  fireEvent(getByTestId("CreateAccount.password"), "onChangeText", "password");
+  fireEvent(getByTestId("CreateAccount.cPassword"), "onChangeText", "password");
+
+  fireEvent.press(getByText("Submit"));
+  expect(getByTestId("CreateAccount.errorMessage").props.children).toBeNull();
+
+  //should just use getByPlaceholderText instead
+  //cannot use fireEvent.ChangeText on these because they are not direct
+  //text inputs in the form, but we can call the prop from the child with
+  //fireEvent(getByTestID("CreateAccount.email"),"onChangeText", "test@example.com");
+});

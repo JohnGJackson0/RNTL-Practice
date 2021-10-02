@@ -47,7 +47,7 @@ export default class CreateAccount extends React.Component {
     } else {
       this.setState({ errorMessage: null });
       const { email, fName, lName, password } = this.state;
-
+      /*
       fetch("https://postman-echo.com/post", {
         method: "POST",
         headers: {
@@ -67,6 +67,7 @@ export default class CreateAccount extends React.Component {
         .catch((err) => {
           console.log("err", err);
         });
+        */
     }
   };
 
@@ -85,21 +86,25 @@ export default class CreateAccount extends React.Component {
           onChangeText={(email) => this.setState({ email })}
         />
         <TextField
+          testID="CreateAccount.fName"
           label="First Name"
           placeholder="John"
           onChangeText={(fName) => this.setState({ fName })}
         />
         <TextField
+          testID="CreateAccount.lName"
           label="Last Name"
           placeholder="Doe"
           onChangeText={(lName) => this.setState({ lName })}
         />
         <TextField
+          testID="CreateAccount.password"
           label="Password"
           secureTextEntry
           onChangeText={(password) => this.setState({ password })}
         />
         <TextField
+          testID="CreateAccount.cPassword"
           label="Confirm Password"
           secureTextEntry
           onChangeText={(cPassword) => this.setState({ cPassword })}
