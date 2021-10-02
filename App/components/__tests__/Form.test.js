@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react-native";
+import { render, fireEvent } from "@testing-library/react-native";
 
 import { TextField } from "../Form";
 
@@ -74,4 +74,59 @@ test("forwards remaining props to the underlying TextInput", () => {
       passedProp: "yes",
     })
   );
+});
+
+test("User input is changed correctly", () => {
+  //jest.fn()
+  /*
+  Good for testing a function is being called, how many times it is called, 
+  what it was called with, make fake return values, ect. 
+
+  We can even use it on public libs 
+  common use case is:
+
+  import axios from 'axios';
+  jest.mock('axios');
+
+  ...
+  axios.get.mockResolvedValue(resp);
+
+  Anytime axios.get called in the test underneath the code 
+  it will return the resp given in args and bypass the actual
+  call
+
+  Users.all() uses axios, but now when it calls axios.get it returns the
+  resp and the call is actually not made
+
+  faster tests and your tests no longer use outside sources which
+  can make them fragile
+
+  return Users.all().then(data => expect(data).toEqual(users));
+  */
+
+  const onChangeTextMock = jest.fn();
+
+  const { getByTestId } = render(
+    <TextField
+      label="Test Label"
+      passedProp="yes"
+      onChangeText={onChangeTextMock}
+    />
+  );
+
+  //fire event
+  /*
+    RNTL does not test implementation details. It is black box testing
+    so to make sure the app works we use FireEvent for anything that a
+    user can/would do on a screen and then expect certain things/flow
+    to happen.
+
+    When the text is changed we expect the prop is called
+  */
+
+  fireEvent.changeText(getByTestId("Form.TextInput"), "testing!");
+  expect(onChangeTextMock).toHaveBeenCalled();
+  //toHaveBeenCalledWith the param it recieved
+  expect(onChangeTextMock).toHaveBeenCalledWith("testing!");
+  expect(onChangeTextMock).not.toHaveBeenCalledWith("no!");
 });
