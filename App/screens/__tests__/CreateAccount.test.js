@@ -1,4 +1,9 @@
 import React from "react";
+
+/*
+Make a note that those who use "react-native-testing-library" import
+are using a previous version of RNTL
+*/
 import { render } from "@testing-library/react-native";
 
 import CreateAccount from "../CreateAccount";
