@@ -47,7 +47,7 @@ export default class CreateAccount extends React.Component {
     } else {
       this.setState({ errorMessage: null });
       const { email, fName, lName, password } = this.state;
-      /*
+      
       fetch("https://postman-echo.com/post", {
         method: "POST",
         headers: {
@@ -67,7 +67,6 @@ export default class CreateAccount extends React.Component {
         .catch((err) => {
           console.log("err", err);
         });
-        */
     }
   };
 
